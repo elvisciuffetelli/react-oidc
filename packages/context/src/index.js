@@ -4,6 +4,7 @@ export {
   withOidcUser,
   OidcSecure,
   withOidcSecure,
+  AuthenticationContext,
 } from './Context';
 export {
   isRequireAuthentication,
