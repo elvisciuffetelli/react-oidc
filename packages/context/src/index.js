@@ -1,6 +1,5 @@
 export {
   AuthenticationProvider,
-  AuthenticationConsumer,
   withOidcUser,
   OidcSecure,
   withOidcSecure,
