@@ -45,12 +45,7 @@ const defaultProps = {
   logger: console,
 };
 
-export const setDefaultState = ({
-  configuration,
-  loggerLevel,
-  logger,
-  isEnabled,
-}) => {
+export const setDefaultState = ({ configuration, loggerLevel, logger, isEnabled }) => {
   setLogger(loggerLevel, logger);
   return {
     oidcUser: undefined,
@@ -137,28 +132,18 @@ const removeEvents = (events, oidcState, setOidcState) => {
   events.removeSilentRenewError(onError(oidcState, setOidcState));
   events.removeUserUnloaded(onUserUnloaded(oidcState, setOidcState));
   events.removeUserSignedOut(onUserUnloaded(oidcState, setOidcState));
-  events.removeAccessTokenExpired(
-    onAccessTokenExpired(oidcState, setOidcState),
-  );
+  events.removeAccessTokenExpired(onAccessTokenExpired(oidcState, setOidcState));
 };
 
 const AuthenticationProviderInt = ({ location, ...otherProps }) => {
   const [oidcState, setOidcState] = useState(() => setDefaultState(otherProps));
-  const {
-    oidcUser,
-    isLoading,
-    error,
-    isEnabled,
-    userManager,
-    isLogout,
-  } = oidcState;
-  const loginCb = useCallback(
-    () => login(oidcState, setOidcState, location)(),
-    [location, oidcState],
-  );
-  const logoutCb = useCallback(() => logout(oidcState, setOidcState)(), []);
+  const { oidcUser, isLoading, error, isEnabled, userManager, isLogout } = oidcState;
+  const loginCb = useCallback(() => login(oidcState, setOidcState, location)(), [
+    location,
+    oidcState,
+  ]);
+  const logoutCb = useCallback(() => logout(oidcState, setOidcState)(), [oidcState]);
   useEffect(() => {
-    console.log(`Reloading !!`);
     setOidcState({
       ...oidcState,
       isLoading: true,
@@ -168,7 +153,7 @@ const AuthenticationProviderInt = ({ location, ...otherProps }) => {
       setOidcState({
         ...oidcState,
         oidcUser: user,
-      }),
+      })
     );
     return () => removeEvents(userManager.events, oidcState, setOidcState);
   }, []);

@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { AuthenticationContext } from "./AuthenticationContextCreator";
-import { OidcRoutes } from "../Routes";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { AuthenticationContext } from './AuthenticationContextCreator';
+import { OidcRoutes } from '../Routes';
 
 const propTypes = {
   notAuthenticated: PropTypes.node,
@@ -16,7 +16,7 @@ const propTypes = {
   logout: PropTypes.func.isRequired,
   configuration: PropTypes.shape({
     redirect_uri: PropTypes.string.isRequired,
-    silent_redirect_uri: PropTypes.string.isRequired
+    silent_redirect_uri: PropTypes.string.isRequired,
   }).isRequired,
   isLogout: PropTypes.bool,
 };
